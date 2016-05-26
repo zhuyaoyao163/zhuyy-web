@@ -126,6 +126,7 @@
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
       <version>3.0-alpha-1</version>
+        <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -232,6 +233,29 @@
           </configuration>
         </configuration>
       </plugin>
+
+
+        <plugin>
+            <groupId>org.apache.tomcat.maven</groupId>
+            <artifactId>tomcat7-maven-plugin</artifactId>
+            <version>2.2</version>
+            <configuration>
+                <port>9090</port>
+                <path>/</path>
+            </configuration>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.derby</groupId>
+                    <artifactId>derby</artifactId>
+                    <version>10.12.1.1</version>
+                </dependency>
+                <dependency>
+                    <groupId>javax.mail</groupId>
+                    <artifactId>mail</artifactId>
+                    <version>1.4</version>
+                </dependency>
+            </dependencies>
+        </plugin>
 
     </plugins>
 
