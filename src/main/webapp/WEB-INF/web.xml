@@ -58,6 +58,11 @@
     <session-timeout>30</session-timeout>
   </session-config>
 
+  <context-param>
+    <param-name>httl.properties</param-name>
+    <param-value>httl.properties</param-value>
+  </context-param>
+
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>

@@ -35,4 +35,11 @@ public class PlusFileController {
         List<PlusFile> plusFiles = plusFileService.getPlusFiles();
         return plusFiles;
     }
+
+    @RequestMapping("/showAllFile")
+    public String showAllFile(Model model){
+        List<PlusFile> files = plusFileService.getPlusFiles();
+        model.addAttribute(files);
+        return "/file/fileList";
+    }
 }
