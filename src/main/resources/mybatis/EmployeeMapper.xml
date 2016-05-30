@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhuyy.demo.mapper.EmployeeMapper" >
+  <resultMap id="BaseResultMap" type="com.zhuyy.demo.model.Employee" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="loginname" property="loginname" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="dept_id" property="deptId" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="married" property="married" jdbcType="INTEGER" />
+    <result column="salary" property="salary" jdbcType="VARCHAR" />
+    <result column="educational" property="educational" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.zhuyy.demo.model.Employee" >
+    insert into t_employee (id, loginname, name, 
+      age, birthday, dept_id, 
+      position, gender, married, 
+      salary, educational, country, 
+      city, remarks, school, 
+      createtime, email)
+    values (#{id,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{age,jdbcType=INTEGER}, #{birthday,jdbcType=TIMESTAMP}, #{deptId,jdbcType=VARCHAR}, 
+      #{position,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{married,jdbcType=INTEGER}, 
+      #{salary,jdbcType=VARCHAR}, #{educational,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhuyy.demo.model.Employee" >
+    insert into t_employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loginname != null" >
+        loginname,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="married != null" >
+        married,
+      </if>
+      <if test="salary != null" >
+        salary,
+      </if>
+      <if test="educational != null" >
+        educational,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null" >
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="married != null" >
+        #{married,jdbcType=INTEGER},
+      </if>
+      <if test="salary != null" >
+        #{salary,jdbcType=VARCHAR},
+      </if>
+      <if test="educational != null" >
+        #{educational,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
