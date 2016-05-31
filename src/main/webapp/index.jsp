@@ -1,6 +1,6 @@
 <html>
 <script type="application/javascript">
-    var url = window.location.href+'index';
+    var url = window.location.href+'index.html';
     window.location.href = url;
 </script>
 <body>

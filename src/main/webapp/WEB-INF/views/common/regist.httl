@@ -1,16 +1,14 @@
 <!--#set(cr = '/resource')-->
 <!--#set(bootstrap = "/resource/widgets/bootstrap-3.3.5")-->
-<!--#set(jquery = "/resource/widgets/jquery-2.1.1.min.js")-->
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
-    <title>Bootstrap响应式登录界面模板</title>
+    <title>注册</title>
 
     <!--<link rel="stylesheet" type="text/css" href="${bootstrap}/css/bootstrap.min.css" />-->
     <link rel="stylesheet" type="text/css" href="${bootstrap}/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${cr}/css/custom.css" />
-    <script src="${jquery}"></script>
 
     <style type="text/css">
         html,body {
@@ -123,17 +121,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-xs-12  ">
-                            <div class="input-group">
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                                <input type="text" id="validCode" name="validCode" class="form-control" placeholder="验证码">
-                            </div>
-                            <div class="input-group">
-                                <label for="codeImg" class="field"></label> <img title="点击更换" id="img_captcha" onclick="javascript:refreshCaptcha();" src="servlet/captchaCode">(看不清<a href="javascript:void(0)" onclick="javascript:refreshCaptcha()">换一张</a>)
-                            </div>
-                        </div>
-                    </div>
                     <div class="form-group form-actions">
                         <div class="col-xs-4 col-xs-offset-4 ">
                             <button type="submit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-off"></span> 登录</button>
@@ -160,10 +147,5 @@
 </div>
 
 </body>
-<script type="application/javascript">
-    var _captcha_id = "#img_captcha";
-    function refreshCaptcha() {
-        $(_captcha_id).attr("src","servlet/captchaCode?t=" + Math.random());
-    }
-</script>
+
 </html>

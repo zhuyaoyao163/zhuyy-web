@@ -50,7 +50,17 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>rest</servlet-name>
-    <url-pattern>/</url-pattern>
+    <url-pattern>*.html</url-pattern>
+  </servlet-mapping>
+
+  <!-- captcha servlet config-->
+  <servlet>
+    <servlet-name>CaptchaServlet</servlet-name>
+    <servlet-class>com.zhuyy.demo.servlet.CaptchaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CaptchaServlet</servlet-name>
+    <url-pattern>/servlet/captchaCode</url-pattern>
   </servlet-mapping>
 
   <!-- 配置session超时时间，单位分钟 -->
