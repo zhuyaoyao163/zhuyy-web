@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
 
@@ -19,7 +18,7 @@ import static java.util.Comparator.comparing;
  * Created by Administrator on 2016/5/24.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:application.xml",
+@ContextConfiguration(locations = {"classpath:spring/applicationContext.xml",
         "classpath:spring-mybatis.xml"})
 public class TestPlusFileService {
     private static final Logger LOGGER = Logger.getLogger(TestPlusFileService.class);

@@ -7,7 +7,7 @@
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:application.xml,classpath:spring-mybatis.xml</param-value>
+    <param-value>classpath:spring/applicationContext.xml,classpath:spring-mybatis.xml</param-value>
   </context-param>
 
   <filter>
@@ -70,7 +70,7 @@
 
   <context-param>
     <param-name>httl.properties</param-name>
-    <param-value>httl.properties</param-value>
+    <param-value>conf/httl.properties</param-value>
   </context-param>
 
   <welcome-file-list>
