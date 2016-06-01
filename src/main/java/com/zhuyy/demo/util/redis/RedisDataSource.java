@@ -1,5 +1,6 @@
 package com.zhuyy.demo.util.redis;
 
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ShardedJedis;
 
 /**
@@ -11,18 +12,18 @@ public interface RedisDataSource {
      * 取得redis的客户端，可以执行命令了
      * @return
      */
-    public abstract ShardedJedis getRedisClient();
+    public abstract Jedis getRedisClient();
 
     /**
      * 将资源返还给pool
-     * @param shardedJedis
+     * @param jedis
      */
-    public void returnResource(ShardedJedis shardedJedis);
+    public void returnResource(Jedis jedis);
 
     /**
      * 出现异常后，将资源返还给pool
-     * @param shardedJedis
+     * @param jedis
      * @param broken
      */
-    public void returnResource(ShardedJedis shardedJedis,boolean broken);
+    public void returnResource(Jedis jedis,boolean broken);
 }

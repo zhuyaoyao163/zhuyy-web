@@ -3,8 +3,8 @@ package com.zhuyy.demo.util.redis;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import redis.clients.jedis.ShardedJedis;
-import redis.clients.jedis.ShardedJedisPool;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 
 /**
@@ -16,13 +16,13 @@ public class RedisDataSourceImpl implements RedisDataSource {
     private static final Logger LOGGER = Logger.getLogger(RedisDataSourceImpl.class);
 
     @Autowired
-    private ShardedJedisPool shardedJedisPool;
+    private JedisPool jedisPool;
 
     @Override
-    public ShardedJedis getRedisClient() {
+    public Jedis getRedisClient() {
         try {
-            ShardedJedis shardJedis = shardedJedisPool.getResource();
-            return shardJedis;
+            Jedis jedis = jedisPool.getResource();
+            return jedis;
         } catch (Exception e) {
             LOGGER.error("getRedisClent error", e);
         }
@@ -30,16 +30,16 @@ public class RedisDataSourceImpl implements RedisDataSource {
     }
 
     @Override
-    public void returnResource(ShardedJedis shardedJedis) {
-        shardedJedisPool.returnResource(shardedJedis);
+    public void returnResource(Jedis Jedis) {
+        jedisPool.returnResource(Jedis);
     }
 
     @Override
-    public void returnResource(ShardedJedis shardedJedis, boolean broken) {
+    public void returnResource(Jedis Jedis, boolean broken) {
         if (broken) {
-            shardedJedisPool.returnBrokenResource(shardedJedis);
+            jedisPool.returnBrokenResource(Jedis);
         } else {
-            shardedJedisPool.returnResource(shardedJedis);
+            jedisPool.returnResource(Jedis);
         }
     }
 }

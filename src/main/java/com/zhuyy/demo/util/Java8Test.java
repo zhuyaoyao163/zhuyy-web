@@ -3,6 +3,7 @@ package com.zhuyy.demo.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.zhuyy.demo.model.PlusFile;
+import com.zhuyy.demo.model.User;
 import org.apache.log4j.Logger;
 
 import java.util.Collections;
@@ -15,14 +16,19 @@ import java.util.List;
 public class Java8Test {
     private static final Logger LOGGER = Logger.getLogger(Java8Test.class);
     public static void main(String[] args) {
-        List<PlusFile> files = getFiles();
-//        Collections.sort(files, new Comparator<PlusFile>() {
-//            public int compare(PlusFile o1, PlusFile o2) {
-//                return Integer.valueOf(o1.getId()).compareTo(Integer.valueOf(o2.getId()));
-//            }
-//        });
-        Collections.sort(files,(PlusFile o1, PlusFile o2) -> Integer.valueOf(o1.getId()).compareTo(Integer.valueOf(o2.getId())));
-        LOGGER.info(JSON.toJSON(files));
+//        List<PlusFile> files = getFiles();
+////        Collections.sort(files, new Comparator<PlusFile>() {
+////            public int compare(PlusFile o1, PlusFile o2) {
+////                return Integer.valueOf(o1.getId()).compareTo(Integer.valueOf(o2.getId()));
+////            }
+////        });
+//        Collections.sort(files,(PlusFile o1, PlusFile o2) -> Integer.valueOf(o1.getId()).compareTo(Integer.valueOf(o2.getId())));
+//        LOGGER.info(JSON.toJSON(files));
+        User user = null;
+        User user1 = new User();
+        user = user1;
+        System.out.println(user == null);
+        System.out.println(user1 == null);
     }
 
     public static List<PlusFile> getFiles() {

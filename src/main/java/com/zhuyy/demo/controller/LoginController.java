@@ -1,16 +1,23 @@
 package com.zhuyy.demo.controller;
 
+import com.zhuyy.demo.model.User;
 import com.zhuyy.demo.service.EmployeeService;
 import com.zhuyy.demo.service.UserService;
+import com.zhuyy.demo.util.constant.Constant;
+import com.zhuyy.demo.util.redis.RedisClientTemplate;
+import com.zhuyy.demo.util.vo.RspData;
 import com.zhuyy.demo.vo.LoginReqVo;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import static com.zhuyy.demo.util.constant.Constant.FAIL_VALID_CODE;
 
 /**
  * Created by Administrator on 2016/5/30.
@@ -28,16 +35,23 @@ public class LoginController {
     }
 
     @RequestMapping("/login")
-    public String login(LoginReqVo user, Model model, HttpServletRequest request){
+    @ResponseBody
+    public RspData login(LoginReqVo user, Model model, HttpServletRequest request){
         HttpSession session = request.getSession();
-        LOGGER.info("session中的值:"+session.getAttribute("SE_KEY_MM_CODE"));
-        LOGGER.info("validCode:"+user.getValidCode());
-        if(session.getAttribute("SE_KEY_MM_CODE").equals(user.getValidCode())){
-            if (userService.login(user.getUserName(), user.getPassWord(), user.getValidCode())) {
-                return "/common/success";
-            }
-        }
-        return "/common/error";
+//        if(session.getAttribute(Constant.KEY_CAPTCHA).equals(user.getValidCode())){
+            RspData rspData = userService.login(user);
+        return rspData;
+//        }
+//        return RspData.error(FAIL_VALID_CODE, "验证码不匹配！");
     }
 
+    @RequestMapping("/success")
+    public String success(){
+        return "/common/success";
+    }
+
+    @RequestMapping("/fail")
+    public String fail(){
+        return "/common/error";
+    }
 }

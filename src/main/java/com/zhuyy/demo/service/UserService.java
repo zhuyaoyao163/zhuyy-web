@@ -1,15 +1,16 @@
 package com.zhuyy.demo.service;
 
+import com.zhuyy.demo.util.vo.RspData;
+import com.zhuyy.demo.vo.LoginReqVo;
+
 /**
  * Created by Administrator on 2016/5/31.
  */
 public interface UserService {
     /**
      * 登录
-     * @param loginName 用户名
-     * @param passWord 密码
-     * @param validCode 验证码
+     * @param loginReqVo 登录请求
      * @return
      */
-    public boolean login(String loginName,String passWord,String validCode);
+    public RspData login(LoginReqVo loginReqVo);
 }

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static com.zhuyy.demo.util.constant.Constant.KEY_CAPTCHA;
+
 /**
  *
  * @author &lt;a href="http://www.micmiu.com"&gt;Michael Sun&lt;/a&gt;
@@ -19,8 +21,6 @@ import javax.servlet.http.HttpSession;
 public class CaptchaServlet extends HttpServlet {
 
     private static final long serialVersionUID = -124247581620199710L;
-
-    public static final String KEY_CAPTCHA = "SE_KEY_MM_CODE";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

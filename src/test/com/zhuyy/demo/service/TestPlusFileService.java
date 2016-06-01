@@ -30,6 +30,7 @@ public class TestPlusFileService {
     public void testGetPlusFileById() {
         PlusFile plusFile = plusFileService.getPlusFileById("1");
         LOGGER.info("==============" + JSON.toJSON(plusFile));
+        System.out.println(JSON.toJSON(plusFile));
     }
 
     @Test
