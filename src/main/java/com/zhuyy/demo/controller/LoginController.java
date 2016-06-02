@@ -36,13 +36,15 @@ public class LoginController {
 
     @RequestMapping("/login")
     @ResponseBody
-    public RspData login(LoginReqVo user, Model model, HttpServletRequest request){
-        HttpSession session = request.getSession();
-//        if(session.getAttribute(Constant.KEY_CAPTCHA).equals(user.getValidCode())){
-            RspData rspData = userService.login(user);
+    public RspData login(LoginReqVo user, Model model, HttpServletRequest request) {
+        if (user.getValidCode() != null && !"".equals(user.getValidCode())) {
+            HttpSession session = request.getSession();
+            if (!session.getAttribute(Constant.KEY_CAPTCHA).equals(user.getValidCode())) {
+                return RspData.error(FAIL_VALID_CODE, "验证码不匹配！");
+            }
+        }
+        RspData rspData = userService.login(user);
         return rspData;
-//        }
-//        return RspData.error(FAIL_VALID_CODE, "验证码不匹配！");
     }
 
     @RequestMapping("/success")

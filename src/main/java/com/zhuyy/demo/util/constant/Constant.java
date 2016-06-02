@@ -13,7 +13,7 @@ public class Constant {
 
     public static final String LOGIN_FAIL_USER = "LOGIN_FAIL_USER";
 
-    public static final String WILD_CARD = "LOGIN_FAIL_USER";
+    public static final String WILD_CARD = "*";
 
     public static final int SUCCESS_CODE = 0;
 

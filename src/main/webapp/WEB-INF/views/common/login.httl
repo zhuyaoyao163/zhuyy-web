@@ -180,7 +180,8 @@
             url: "login.html",
             data: queryParam,
             success: function(result){
-                var code = JSON.parse(result).code;
+                result = JSON.parse(result);
+                var code = result.code;
                 if (code == 0) {
                     window.location.href = "success.html";
                 }
