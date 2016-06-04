@@ -1,7 +1,6 @@
 package com.zhuyy.demo.mapper;
 
 import com.zhuyy.demo.model.User;
-import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -15,6 +14,4 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-
-    User selectUserForLogin(@Param("loginName") String loginName,@Param("passWord") String passWord);
 }
