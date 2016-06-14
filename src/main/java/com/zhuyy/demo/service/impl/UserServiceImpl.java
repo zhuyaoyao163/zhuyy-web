@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.zhuyy.demo.mapper.UserMapper;
 import com.zhuyy.demo.model.User;
 import com.zhuyy.demo.service.UserService;
+import com.zhuyy.demo.util.activemq.util.DemoMqSender;
 import com.zhuyy.demo.util.constant.Constant;
 import com.zhuyy.demo.util.redis.RedisClientTemplate;
 import com.zhuyy.demo.util.vo.RspData;
@@ -28,6 +29,8 @@ public class UserServiceImpl implements UserService {
     @Resource
     private RedisClientTemplate redisClientTemplate;
 
+    @Resource
+    private DemoMqSender demoMqSender;
     //登录需要验证码的标志
     private static final int errCode = 2;
     @Override
@@ -52,6 +55,7 @@ public class UserServiceImpl implements UserService {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                demoMqSender.send("登录成功！");
                 return RspData.success(null);
             }else{
                 //登录失败用户，放入缓存，并指定过期时间
