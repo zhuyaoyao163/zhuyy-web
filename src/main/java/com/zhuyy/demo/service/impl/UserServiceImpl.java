@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.zhuyy.demo.mapper.UserMapper;
 import com.zhuyy.demo.model.User;
 import com.zhuyy.demo.service.UserService;
+import com.zhuyy.demo.util.activemq.util.DemoMqReceiver;
 import com.zhuyy.demo.util.activemq.util.DemoMqSender;
 import com.zhuyy.demo.util.constant.Constant;
 import com.zhuyy.demo.util.redis.RedisClientTemplate;
@@ -31,6 +32,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private DemoMqSender demoMqSender;
+
+    @Resource
+    private DemoMqReceiver demoMqReceiver;
     //登录需要验证码的标志
     private static final int errCode = 2;
     @Override
@@ -69,5 +73,9 @@ public class UserServiceImpl implements UserService {
             }
         }
         return RspData.error(Constant.FAIL_CODE, "密码用户不匹配");
+    }
+
+    public void receiveMsg() {
+        demoMqReceiver.receiveMsg();
     }
 }

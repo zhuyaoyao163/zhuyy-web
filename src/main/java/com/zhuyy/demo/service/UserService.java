@@ -13,4 +13,6 @@ public interface UserService {
      * @return
      */
     public RspData login(LoginReqVo loginReqVo);
+
+    public void receiveMsg();
 }

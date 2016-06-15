@@ -56,4 +56,10 @@ public class LoginController {
     public String fail(){
         return "/common/error";
     }
+
+    @RequestMapping("/receive")
+    public String receive(){
+        userService.receiveMsg();
+        return "/common/success";
+    }
 }
