@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestAnnotationTask {
 
-    @Scheduled(cron = "5/3 * * * * ?")
+//    @Scheduled(cron = "5/3 * * * * ?")
     public void say() {
         System.out.println("=========say=========");
     }
-    @Scheduled(cron = "5/3 * * * * ?")
+//    @Scheduled(cron = "5/3 * * * * ?")
     public void hello() {
         System.out.println("=========hello=========");
     }

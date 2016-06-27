@@ -18,4 +18,5 @@
     <import resource="applicationContext-cache.xml"/>
     <import resource="applicationContext-jms.xml"/>
     <import resource="applicationContext-task.xml"/>
+    <!--<import resource="applicationContext-rabbit.xml"/>-->
 </beans>

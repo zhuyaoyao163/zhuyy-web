@@ -17,19 +17,19 @@ import javax.annotation.Resource;
         "classpath:spring-mybatis.xml","classpath:spring/applicationContext-cache.xml"})
 public class ProducerConsumerTest {
 
-    @Resource
-    private TopicMqSender topicMqSender;
-
-    @Resource
-    private DemoMqReceiver demoMqReceiver;
-
-    @Test
-    public void testMessageListenerAdapter() {
-        topicMqSender.send("测试topic消息");
-    }
-
-    @Test
-    public void testTopicConsumer() {
-        demoMqReceiver.receiveMsg();
-    }
+//    @Resource
+//    private TopicMqSender topicMqSender;
+//
+//    @Resource
+//    private DemoMqReceiver demoMqReceiver;
+//
+//    @Test
+//    public void testMessageListenerAdapter() {
+//        topicMqSender.send("测试topic消息");
+//    }
+//
+//    @Test
+//    public void testTopicConsumer() {
+//        demoMqReceiver.receiveMsg();
+//    }
 }
