@@ -1,8 +1,11 @@
 package com.zhuyy.demo.vo;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * Created by Administrator on 2016/5/31.
  */
+@Document(collection = "login_Vo")
 public class LoginReqVo {
     public String userName;
     public String passWord;

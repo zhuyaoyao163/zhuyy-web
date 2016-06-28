@@ -10,6 +10,7 @@
     <!--引入配置属性文件 -->
     <context:property-placeholder location="classpath:conf/jdbc.properties" ignore-unresolvable="true"/>
     <context:property-placeholder location="classpath:conf/redis.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath:conf/mongo.properties" ignore-unresolvable="true"/>
 
     <!--自动扫描含有@Service将其注入为bean -->
     <context:component-scan base-package="com.zhuyy.demo.service" />
@@ -19,4 +20,5 @@
     <import resource="applicationContext-jms.xml"/>
     <import resource="applicationContext-task.xml"/>
     <!--<import resource="applicationContext-rabbit.xml"/>-->
+    <import resource="applicationContext-mongodb.xml"/>
 </beans>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+
+    <!--<mongo:mongo replica-set="${mongodb.replica-set}"-->
+                 <!--write-concern="${mongodb.write-concern}">-->
+        <!--<mongo:options connections-per-host="${mongodb.connections-per-host}"-->
+                       <!--threads-allowed-to-block-for-connection-multiplier="${mongodb.threads-allowed-to-block-for-connection-multiplier}"/>-->
+    <!--</mongo:mongo>-->
+
+    <!--<mongo:db-factory mongo-ref="mongo" dbname="${mongodb.database}"/>-->
+
+    <!--<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">-->
+        <!--<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />-->
+    <!--</bean>-->
+    <mongo:mongo host="${mongo.host}" port="${mongo.port}"/>
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg ref="mongo"/>
+        <constructor-arg name="databaseName" value="${mongo.database}"/>
+    </bean>
+</beans>

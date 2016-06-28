@@ -8,6 +8,7 @@ import com.zhuyy.demo.util.redis.RedisClientTemplate;
 import com.zhuyy.demo.util.vo.RspData;
 import com.zhuyy.demo.vo.LoginReqVo;
 import org.apache.log4j.Logger;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,9 @@ public class LoginController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private MongoTemplate mongoTemplate;
+
     @RequestMapping("/index")
     public String index(){
         return "/common/login";
@@ -44,6 +48,11 @@ public class LoginController {
             }
         }
         RspData rspData = userService.login(user);
+        if (rspData.getCode() == 0) {
+            HttpSession session = request.getSession();
+            session.setAttribute(user.getUserName(), user);
+        }
+        mongoTemplate.save(user);
         return rspData;
     }
 
