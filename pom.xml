@@ -177,12 +177,18 @@
       <artifactId>commons-fileupload</artifactId>
       <version>1.2.2</version>
     </dependency>
-    <!-- httl -->
+    <!-- httl begin -->
     <dependency>
       <groupId>com.github.httl</groupId>
       <artifactId>httl-springmvc</artifactId>
       <version>1.0.11</version>
     </dependency>
+    <dependency>
+      <groupId>org.javassist</groupId>
+      <artifactId>javassist</artifactId>
+      <version>3.18.2-GA</version>
+    </dependency>
+    <!-- httl end -->
 
     <!-- redis -->
     <dependency>

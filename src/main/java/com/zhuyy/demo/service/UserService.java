@@ -14,5 +14,5 @@ public interface UserService {
      */
     public RspData login(LoginReqVo loginReqVo);
 
-    public void receiveMsg();
+    /*public void receiveMsg();*/
 }

@@ -30,8 +30,8 @@ public class LoginController {
     @Resource
     private UserService userService;
 
-    @Resource
-    private MongoTemplate mongoTemplate;
+    /*@Resource
+    private MongoTemplate mongoTemplate;*/
 
     @RequestMapping("/index")
     public String index(){
@@ -52,7 +52,7 @@ public class LoginController {
             HttpSession session = request.getSession();
             session.setAttribute(user.getUserName(), user);
         }
-        mongoTemplate.save(user);
+       /* mongoTemplate.save(user);*/
         return rspData;
     }
 
@@ -68,7 +68,7 @@ public class LoginController {
 
     @RequestMapping("/receive")
     public String receive(){
-        userService.receiveMsg();
+        /*userService.receiveMsg();*/
         return "/common/success";
     }
 }

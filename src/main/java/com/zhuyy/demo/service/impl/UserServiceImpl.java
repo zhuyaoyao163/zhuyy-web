@@ -30,11 +30,11 @@ public class UserServiceImpl implements UserService {
     @Resource
     private RedisClientTemplate redisClientTemplate;
 
-    @Resource
+    /*@Resource
     private DemoMqSender demoMqSender;
 
     @Resource
-    private DemoMqReceiver demoMqReceiver;
+    private DemoMqReceiver demoMqReceiver;*/
     //登录需要验证码的标志
     private static final int errCode = 2;
     @Override
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                demoMqSender.send("登录成功！");
+                /*demoMqSender.send("登录成功！");*/
                 return RspData.success(null);
             }else{
                 //登录失败用户，放入缓存，并指定过期时间
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
         return RspData.error(Constant.FAIL_CODE, "密码用户不匹配");
     }
 
-    public void receiveMsg() {
+    /*public void receiveMsg() {
         demoMqReceiver.receiveMsg();
-    }
+    }*/
 }

@@ -8,7 +8,7 @@
 
 	<!--配置connection-factory，指定连接rabbit server参数 -->
 	<rabbit:connection-factory id="connectionFactory"
-							   username="guest" password="guest" host="121.0.0.1" port="15672" />
+							   username="guest" password="guest" host="localhost" port="5672" />
 
 	<!--定义rabbit template用于数据的接收和发送 -->
 	<rabbit:template id="amqpTemplate"  connection-factory="connectionFactory"
