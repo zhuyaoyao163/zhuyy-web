@@ -6,33 +6,73 @@
            http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
 
-	<!--配置connection-factory，指定连接rabbit server参数 -->
-	<rabbit:connection-factory id="connectionFactory"
-							   username="guest" password="guest" host="localhost" port="5672" />
+	<!-- 连接服务配置 -->
+    <rabbit:connection-factory id="connectionFactory"
+        host="${rabbitmq.host}" port="${rabbitmq.port}" username="${rabbitmq.username}"
+        password="${rabbitmq.password}" channel-cache-size="${rabbitmq.channel.cache.size}" />
+    
+    <!-- 设置Ack模式为手动 -->    
+    <bean id="ackManual"
+        class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+        <property name="staticField"
+            value="org.springframework.amqp.core.AcknowledgeMode.MANUAL" />
+    </bean>
 
-	<!--定义rabbit template用于数据的接收和发送 -->
-	<rabbit:template id="amqpTemplate"  connection-factory="connectionFactory"
-					 exchange="exchangeTest" />
+    <!-- 异常处理，记录异常信息 --> 
+    <bean id="mqErrorHandler" class="com.zefun.wechat.utils.MQErrorHandler"/>
+    
+    <!-- 将类自动注入，可解析msg信息 -->    
+    <bean id="msgConverter" class="org.springframework.amqp.support.converter.SimpleMessageConverter" />
 
-	<!--通过指定下面的admin信息，当前producer中的exchange和queue会在rabbitmq服务器上自动生成 -->
-	<rabbit:admin connection-factory="connectionFactory" />
-
-	<!--定义queue -->
-	<rabbit:queue name="queueTest" durable="true" auto-delete="false" exclusive="false" />
-
-	<!-- 定义direct exchange，绑定queueTest -->
-	<rabbit:direct-exchange name="exchangeTest" durable="true" auto-delete="false">
-		<rabbit:bindings>
-			<rabbit:binding queue="queueTest" key="queueTestKey"></rabbit:binding>
-		</rabbit:bindings>
-	</rabbit:direct-exchange>
-
-	<!-- 消息接收者 -->
-	<bean id="messageReceiver" class="com.zhuyy.demo.util.rabbitmq.MessageConsumer"></bean>
-
-	<!-- queue litener  观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象-->
-	<rabbit:listener-container connection-factory="connectionFactory">
-		<rabbit:listener queues="queueTest" ref="messageReceiver"/>
-	</rabbit:listener-container>
+	<!-- 创建rabbitAdmin 代理类 -->
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"/>
+    <rabbit:admin connection-factory="connectionFactory" />
+    
+    <!-- 创建SimpleMessageListenerContainer的理想通道，主要实现异常事件处理逻辑 -->
+    <bean id="retryOperationsInterceptorFactoryBean"
+        class="org.springframework.amqp.rabbit.config.StatelessRetryOperationsInterceptorFactoryBean">
+        <property name="messageRecoverer">
+            <bean class="com.zefun.wechat.utils.MQRepublishMessageRecoverer"/>
+        </property>
+        <property name="retryOperations">
+            <bean class="org.springframework.retry.support.RetryTemplate">
+                <property name="backOffPolicy">
+                    <bean
+                        class="org.springframework.retry.backoff.ExponentialBackOffPolicy">
+                        <property name="initialInterval" value="500" />
+                        <property name="multiplier" value="10.0" />
+                        <property name="maxInterval" value="10000" />
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    
+    <!-- 定义队列，在下面的交换机中引用次队列，实现绑定 -->     
+    <rabbit:queue id="queue_system_error_logger_jmail" name="${rabbitmq.system.out.log.error.mail}" durable="true"
+        auto-delete="false" exclusive="false" />
+                         
+    <!--路由设置 将队列绑定，属于direct类型 -->
+    <rabbit:direct-exchange id="directExchange"
+        name="directExchange" durable="true" auto-delete="false">
+        <rabbit:bindings>
+            <rabbit:binding queue="queue_system_error_logger_jmail" key="${rabbitmq.system.out.log.error.mail}" />
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+    
+    
+    <!-- logger 日志发送功能 -->
+    <bean class="org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="acknowledgeMode" ref="ackManual" />
+        <property name="queueNames" value="${rabbitmq.system.out.log.error.mail}" />
+        <property name="messageListener">
+            <bean class="com.zefun.wechat.listener.SystemOutLogErrorMessageNoitce" />
+        </property>
+        <property name="concurrentConsumers" value="${rabbitmq.concurrentConsumers}" />
+        <property name="adviceChain" ref="retryOperationsInterceptorFactoryBean" />
+        <property name="errorHandler" ref="mqErrorHandler" />
+    </bean>    
+</beans>
 
 </beans>
