@@ -12,9 +12,10 @@
     <context:property-placeholder location="classpath:conf/redis.properties" ignore-unresolvable="true"/>
     <context:property-placeholder location="classpath:conf/mongo.properties" ignore-unresolvable="true"/>
     <context:property-placeholder location="classpath:conf/rabbitmq.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath:conf/velocity.properties" ignore-unresolvable="true"/>
 
     <!--自动扫描含有@Service将其注入为bean -->
-    <context:component-scan base-package="com.zhuyy.demo.service" />
+    <context:component-scan base-package="com.zhuyy.demo" />
 
     <!-- 导入分割的spring配置文件 -->
     <import resource="applicationContext-cache.xml"/>

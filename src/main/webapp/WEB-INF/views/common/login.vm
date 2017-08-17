@@ -1,14 +1,16 @@
-<!--#set(cr = '/resource')-->
-<!--#set(bootstrap = "/resource/widgets/bootstrap-3.3.5")-->
+#set ($cr="resource")
+#set ($bootstrap="/resource/widgets/bootstrap-3.3.5")
+#set ($jquery="/resource/widgets/jquery-2.1.1.min.js")
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
-    <title>注册</title>
+    <title>Bootstrap响应式登录界面模板</title>
 
     <!--<link rel="stylesheet" type="text/css" href="${bootstrap}/css/bootstrap.min.css" />-->
     <link rel="stylesheet" type="text/css" href="${bootstrap}/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${cr}/css/custom.css" />
+    <script src="${jquery}"></script>
 
     <style type="text/css">
         html,body {
@@ -121,9 +123,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group" style="display: none">
+                        <div class="col-xs-12  ">
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                                <input type="text" id="validCode" name="validCode" class="form-control" placeholder="验证码">
+                            </div>
+                            <div class="input-group">
+                                <label for="img_captcha" class="field"></label> <img title="点击更换" id="img_captcha" onclick="javascript:refreshCaptcha();" src="servlet/captchaCode">(看不清<a href="javascript:void(0)" onclick="javascript:refreshCaptcha()">换一张</a>)
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group form-actions">
                         <div class="col-xs-4 col-xs-offset-4 ">
-                            <button type="submit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-off"></span> 登录</button>
+                            <button type="button" class="btn btn-sm btn-info" id="loginButton"><span class="glyphicon glyphicon-off"></span> 登录</button>
                         </div>
                     </div>
                     <div class="form-group">
@@ -147,5 +160,58 @@
 </div>
 
 </body>
+<script type="application/javascript">
+    var _captcha_id = "#img_captcha";
+    function refreshCaptcha() {
+        $(_captcha_id).attr("src","servlet/captchaCode?t=" + Math.random());
+    }
+    $('#loginButton').click(function () {
+        var queryParam = "{'";
+        $(".input-group:visible input").each(function(){
+            queryParam += $(this).attr("name") + "':'" + $(this).val() + "','";
+        });
+        $(".input-group:visible select").each(function(){
+            queryParam += $(this).attr("name") + "':'" + $(this).val() + "','";
+        });
+        queryParam = queryParam.substring(0,(queryParam.length)-2) + "}";
+        queryParam = eval("("+queryParam+")");
+        jQuery.ajax({
+            type: "POST",
+            url: "login.html",
+            data: queryParam,
+            success: function(result){
+                result = JSON.parse(result);
+                var code = result.code;
+                if (code == 0) {
+                    window.location.href = "success.html";
+                }
+                else if (code == 2) {
+                    $('.form-group').eq(2).removeAttr('style');
+                }
+                else {
+                    alert(result.msg);
+                }
+            }
+        });
+    });
 
+    /*$("form").validate({
+        ignore: "",
+        rules:{
+            userName:{
+                notblank:true
+            },
+            passWord:{
+                notblank:true
+            }
+        },messages:{
+            provinceId:{
+                notblank:"用户名不能为空"
+            },
+            cityId:{
+                notblank:"密码不能为空"
+            }
+        }
+    });*/
+</script>
 </html>
