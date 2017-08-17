@@ -10,7 +10,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.retry.MessageRecoverer;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Component;
+@Component
 public class MQRepublishMessageRecoverer implements MessageRecoverer {
 
 	private static final Logger logger = Logger.getLogger(MQRepublishMessageRecoverer.class);

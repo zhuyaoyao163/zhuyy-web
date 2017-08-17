@@ -19,11 +19,12 @@
     </bean>
 
     <!-- 异常处理，记录异常信息 --> 
-    <bean id="mqErrorHandler" class="com.zefun.wechat.utils.MQErrorHandler"/>
+    <bean id="mqErrorHandler" class="com.zhuyy.demo.util.rabbitmq.MQErrorHandler"/>
     
     <!-- 将类自动注入，可解析msg信息 -->    
     <bean id="msgConverter" class="org.springframework.amqp.support.converter.SimpleMessageConverter" />
-
+	
+	<bean id="senderImpl" class="org.springframework.mail.javamail.JavaMailSenderImpl" />
 	<!-- 创建rabbitAdmin 代理类 -->
     <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"/>
     <rabbit:admin connection-factory="connectionFactory" />
@@ -32,7 +33,7 @@
     <bean id="retryOperationsInterceptorFactoryBean"
         class="org.springframework.amqp.rabbit.config.StatelessRetryOperationsInterceptorFactoryBean">
         <property name="messageRecoverer">
-            <bean class="com.zefun.wechat.utils.MQRepublishMessageRecoverer"/>
+            <bean class="com.zhuyy.demo.util.rabbitmq.MQRepublishMessageRecoverer"/>
         </property>
         <property name="retryOperations">
             <bean class="org.springframework.retry.support.RetryTemplate">
@@ -49,14 +50,14 @@
     </bean>
     
     <!-- 定义队列，在下面的交换机中引用次队列，实现绑定 -->     
-    <rabbit:queue id="queue_system_error_logger_jmail" name="${rabbitmq.system.out.log.error.mail}" durable="true"
+    <rabbit:queue id="queue_system_error_logger_jmail" name="directQueue" durable="true"
         auto-delete="false" exclusive="false" />
                          
     <!--路由设置 将队列绑定，属于direct类型 -->
     <rabbit:direct-exchange id="directExchange"
         name="directExchange" durable="true" auto-delete="false">
         <rabbit:bindings>
-            <rabbit:binding queue="queue_system_error_logger_jmail" key="${rabbitmq.system.out.log.error.mail}" />
+            <rabbit:binding queue="queue_system_error_logger_jmail" key="directKey" />
         </rabbit:bindings>
     </rabbit:direct-exchange>
     
@@ -65,14 +66,12 @@
     <bean class="org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer">
         <property name="connectionFactory" ref="connectionFactory" />
         <property name="acknowledgeMode" ref="ackManual" />
-        <property name="queueNames" value="${rabbitmq.system.out.log.error.mail}" />
+        <property name="queueNames" value="directQueue" />
         <property name="messageListener">
-            <bean class="com.zefun.wechat.listener.SystemOutLogErrorMessageNoitce" />
+            <bean class="com.zhuyy.demo.util.rabbitmq.SystemOutLogErrorMessageNoitce" />
         </property>
-        <property name="concurrentConsumers" value="${rabbitmq.concurrentConsumers}" />
+        <!-- <property name="concurrentConsumers" value="${rabbitmq.concurrentConsumers}" /> -->
         <property name="adviceChain" ref="retryOperationsInterceptorFactoryBean" />
         <property name="errorHandler" ref="mqErrorHandler" />
     </bean>    
-</beans>
-
 </beans>

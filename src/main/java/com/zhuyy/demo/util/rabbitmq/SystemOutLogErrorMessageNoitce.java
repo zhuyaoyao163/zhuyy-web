@@ -10,10 +10,11 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
 import com.rabbitmq.client.Channel;
-
+@Component
 public class SystemOutLogErrorMessageNoitce implements ChannelAwareMessageListener {
 
 	 private static final Logger logger = Logger.getLogger(SystemOutLogErrorMessageNoitce.class);
@@ -29,15 +30,17 @@ public class SystemOutLogErrorMessageNoitce implements ChannelAwareMessageListen
 	        Object obj = null;
 	        try {
 	            obj = msgConverter.fromMessage(message);
+	            logger.info("收到消息："+obj.toString());
 	        } catch (MessageConversionException e) {
 	            logger.error("convert MQ message error.", e);
 	        } finally {
 	            long deliveryTag = message.getMessageProperties().getDeliveryTag();
-	            if (deliveryTag != App.DELIVERIED_TAG) {
-	                channel.basicAck(deliveryTag, false);
-	                message.getMessageProperties().setDeliveryTag(App.DELIVERIED_TAG);
-	                logger.info("revice and ack msg: " + (obj == null ? message : new String((byte[]) obj)));
-	            }
+	            logger.info("deliveryTag = " + deliveryTag);
+//	            if (deliveryTag != App.DELIVERIED_TAG) {
+//	                channel.basicAck(deliveryTag, false);
+//	                message.getMessageProperties().setDeliveryTag(App.DELIVERIED_TAG);
+//	                logger.info("revice and ack msg: " + (obj == null ? message : new String((byte[]) obj)));
+//	            }
 	        }
 	        if (obj == null) {
 	            return;
@@ -60,8 +63,8 @@ public class SystemOutLogErrorMessageNoitce implements ChannelAwareMessageListen
 	    public void sendMailSystemLoggerError(String date, String subject, String domain, String requestURL, String message) throws Exception{
 	        MimeMessage mailMessage = this.senderImpl.createMimeMessage();
 	        MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage, true);
-	        messageHelper.setTo("1043851832@qq.com");
-	        messageHelper.setFrom("18734911338@163.com");
+	        messageHelper.setTo("784822936@qq.com");
+	        messageHelper.setFrom("zhu_yaoyao@163.com");
 	        messageHelper.setSubject(date + " 系统异常");
 	        String msg = "<p>异常时间：" + date + "</p><p>门店企业：" + subject + "</p>"
 	                    + "<p>部署环境：" + domain + "</p><p>异常连接：" + requestURL + "</p>"

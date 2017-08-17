@@ -42,9 +42,9 @@
         <property name="suffix" value=".jsp" />
     </bean>-->
 
-    <bean id="viewResolver" class="httl.web.springmvc.HttlViewResolver">
+    <!-- <bean id="viewResolver" class="httl.web.springmvc.HttlViewResolver">
         <property name="contentType" value="text/html; charset=UTF-8" />
-    </bean>
+    </bean> -->
 
     <!-- 配置多文件上传 -->
     <bean id="multipartResolver"
