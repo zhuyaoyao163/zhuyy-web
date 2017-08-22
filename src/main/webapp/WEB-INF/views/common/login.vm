@@ -1,4 +1,4 @@
-#set ($cr="resource")
+#set ($cr="/resource")
 #set ($bootstrap="/resource/widgets/bootstrap-3.3.5")
 #set ($jquery="/resource/widgets/jquery-2.1.1.min.js")
 <html>
